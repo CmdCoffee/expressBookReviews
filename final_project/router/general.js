@@ -35,29 +35,50 @@ public_users.get('/author/:author',function (req, res) {
     const author = req.params.author;
 
     if(author) { 
-        const booksKeys = object.keys(books)
-        const authorBooks = bookske
-
-
-        if() {
-            return res.status(200).json(book)
+        const booksKeys = Object.keys(books);
+        const booksByAuthorKeys = booksKeys.filter(key => books[key].author === author);
+        const booksByAuthor = booksByAuthorKeys.map(key => books[key])
+        
+        if(booksByAuthor.length > 0) {
+            return res.status(200).json(booksByAuthor)
         } else {
-            res.status(404).json({message: "No Author match"})
+            res.status(404).json({message: "No author match"})
         }
     }
-    return res.status(404).json({message: "Please provide Author"});
+    return res.status(404).json({message: "Please provide author"});
 });
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+    const title = req.params.title;
+
+    if(title) { 
+        const booksKeys = Object.keys(books);
+        const booksByTitleKeys = booksKeys.filter(key => books[key].title === title);
+        const booksByTitle = booksByTitleKeys.map(key => books[key])
+        
+        if(booksByTitle.length > 0) {
+            return res.status(200).json(booksByTitle)
+        } else {
+            res.status(404).json({message: "No title match"})
+        }
+    }
+    return res.status(404).json({message: "Please provide title"});
 });
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+    const isbn = req.params.isbn;
+
+    if(isbn) {
+        if(books[isbn]) {
+            const reviews = books[isbn].reviews
+            return res.status(200).json(reviews)
+        } else {
+            res.status(404).json({message: "No ISBN match"})
+        }
+    }
+    return res.status(404).json({message: "Please provide ISBN to receive the reviews"});
 });
 
 module.exports.general = public_users;
