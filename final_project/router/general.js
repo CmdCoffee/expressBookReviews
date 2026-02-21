@@ -7,17 +7,17 @@ const public_users = express.Router();
 
 // ── Helper Functions ──────────────────────────────────────────────────────────
 
-// Fetch all books from the server
+// Fetch all books from the local server
 async function getAllBooks() {
     const response = await axios.get('http://localhost:5000/');
     return response.data;
 }
 
-// Filter books by a given field and value
-function filterBooks(books, field, value) {
-    const keys = Object.keys(books);
-    const matchingKeys = keys.filter(key => books[key][field] === value);
-    return matchingKeys.map(key => books[key]);
+// Filter books by a given field (e.g. 'author' or 'title') and value
+function filterBooks(booksData, field, value) {
+    const keys = Object.keys(booksData);
+    const matchingKeys = keys.filter(key => booksData[key][field] === value);
+    return matchingKeys.map(key => booksData[key]);
 }
 
 // ── Public Routes ─────────────────────────────────────────────────────────────
